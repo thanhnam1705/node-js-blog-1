@@ -1,16 +1,38 @@
 {
-  "name": "blog-1",
+  "name": "blog",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --inspect index.js",
+    "beautiful": "lint-staged",
+    "start": "nodemon --inspect src/index.js",
+    "sass:watch": "sass --watch src/resources/scss:src/public/css",
+    "sass:build": "sass src/resources/scss:src/public/css",
+    "serve": "browser-sync start --proxy \"http://localhost:3000\" --port 3001 --files \"src/public/css/*.css, src/resources/views/**/*.hbs\"",
+    "dev": "concurrently \"npm run sass:watch\" \"npm start\" \"npm run serve\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "lint-staged": {
+    "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "dependencies": {
     "express": "^5.1.0",
-    "nodemon": "^3.1.10"
+    "express-handlebars": "^8.0.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.29.3",
+    "concurrently": "^8.2.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
+    "livereload": "^0.10.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "prettier": "^3.6.2",
+    "sass": "^1.92.1"
   }
 }
